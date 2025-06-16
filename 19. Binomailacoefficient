@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+// Function to print Pascal's Triangle and return C(n, k)
+int binomialCoefficient(int n, int k) {
+    int C[n+1][n+1];
+    int i, j;
+
+    // Building Pascal's Triangle
+    for (i = 0; i <= n; i++) {
+        for (j = 0; j <= i; j++) {
+            // Base cases
+            if (j == 0 || j == i)
+                C[i][j] = 1;
+            else
+                C[i][j] = C[i-1][j-1] + C[i-1][j];
+        }
+    }
+
+    // Printing Pascal's Triangle
+    printf("Pascal's Triangle up to row %d:\n", n);
+    for (i = 0; i <= n; i++) {
+        // For formatting
+        for (j = 0; j <= i; j++)
+            printf("%4d", C[i][j]);
+        printf("\n");
+    }
+
+    return C[n][k];
+}
+
+int main() {
+    int n, k;
+    printf("Enter the no. of items for the set:");
+    scanf("%d",&n);
+    printf("Enter the no. of items for the subset:");
+    scanf("%d",&k);    
+	int result = binomialCoefficient(n, k);
+    printf("\nC(%d, %d) = %d\n", n, k, result);
+
+    return 0;
+}
