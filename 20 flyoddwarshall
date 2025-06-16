@@ -1,0 +1,51 @@
+#include<stdio.h>
+void floyd(int dist[100][100],int v)
+{
+	for(int k=0;k<v;k++)
+	{
+		for(int i=0;i<v;i++)
+		{
+			for(int j=0;j<v;j++)
+			{
+				if(dist[i][j]>dist[i][k]+dist[k][j])
+				dist[i][j]=dist[i][k]+dist[k][j];
+			}
+		}
+	}
+	for(int i=0;i<v;i++)
+	{
+		if(dist[i][i]<0)
+		printf("Graph contains negative cycle");
+	}
+		for(int i=0;i<v;i++)
+		{
+			for(int j=0;j<v;j++)
+			{
+				printf("%d ",dist[i][j]);
+			}
+			printf("\n");
+		}
+}
+
+int main()
+{
+	int dist[100][100],n;
+	printf("Enter the no. of vertices:");
+	scanf("%d",&n);
+	for(int i=0;i<n;i++)
+	{
+		for(int j=0;j<n;j++)
+		{
+			if(i==j){
+			printf("Enter Zero in [%d][%d]:",i,j);
+			scanf("%d",&dist[i][j]);
+		}
+		else{
+			printf("Enter the weight in [%d][%d]:",i,j);
+			scanf("%d",&dist[i][j]);
+		}
+		}
+	}
+	floyd(dist,n);
+	return 0;
+}
