@@ -1,0 +1,76 @@
+#include<stdio.h>
+void merge(int a[],int p,int q,int r);
+void mergesort(int a[],int p,int r)
+{
+	int q;
+	if(p<r)
+		q=(p+(r-1))/2;
+	mergesort(a,p,q);
+	mergesort(a,q+1,r);
+	merge(a,p,q,r);		
+}
+void merge(int a[],int p,int q,int r)
+{
+	int n1,n2,i,j,x,k;
+	n1=q-p+1;
+	n2=r-q;
+	int L[n1],R[n2];
+	for(i=1;i<=n1;i++)
+		{
+			L[i]=a[p+i-1];	
+		}	
+	for(j=1;i<=n2;j++)
+		{
+			R[j]=a[q+j];
+		}
+	i = 0;
+    j = 0;
+    k= p;
+    while (i < n1 && j < n2) 
+	{
+        if (L[i] <= R[j]) 
+		{
+            a[k] = L[i];
+            i++;
+        }
+        else 
+		{
+            a[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+	while (i < n1) 
+	{
+        a[k] = L[i];
+        i++;
+        k++;
+    }
+    // Copy the remaining elements of R[],
+    // if there are any
+    while (j < n2) 
+	{
+        a[k] = R[j];
+        j++;
+        k++;
+    }
+}
+int main()
+{
+	int a[5],i,p,r;
+	printf("Enter the array elements: ");
+	for(i=0;i<5;i++)
+		{
+			scanf("%d",&a[i]);
+		}
+	a[0]=p;
+	a[4]=r;
+	mergesort(a,p,r);
+	printf("The sorted array is: ");
+	for(i=0;i<5;i++)
+		{
+			printf("%d\t",a[i]);
+		}
+	return 0;
+}
