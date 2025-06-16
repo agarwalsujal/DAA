@@ -1,0 +1,60 @@
+#include<stdio.h>
+#include<time.h>
+int main()
+{
+	clock_t s,e;
+	s=clock();
+	int n,i,j,temp,amt,t=0;
+	printf("Enter total no of coins: ");
+	scanf("%d",&n);
+	int a[n],d[n];
+	printf("\nEnter the coin value: ");
+	for(i=0;i<n;i++)
+	{
+		scanf("%d",&a[i]);
+	}
+	for(i=0;i<n-1;i++)
+	{
+		for(j=0;j<n-i-1;j++)
+		{
+			if(a[j]<a[j+1])
+			{
+				temp=a[j];
+				a[j]=a[j+1];
+				a[j+1]=temp;
+			}
+		}
+	}
+	printf("\nGiven set of sorted coins(descending order):\t");
+	for(i=0;i<n;i++)
+	{
+		printf("%d \t",a[i]);
+	}
+	printf("\nEnter target amount: ");
+	scanf("%d",&amt);
+	i=0;
+	while(amt > 0 && i < n)
+    {
+        while(amt >= a[i])
+        {
+            d[t++] = a[i];
+            amt -= a[i];
+        }
+        i++;
+    }
+    if(amt==0)
+    {
+		printf("\nCoins used to form target amount:\t");
+		for(i=0;i<t;i++)
+		{
+			printf("%d\t",d[i]);
+		}
+	}
+	else
+	{
+		printf("\nThe given coins cannot form the target amount!!");
+	}
+	e=clock();
+	printf("\nCPU Time: %lf",(double)(e-s)/CLOCKS_PER_SEC);
+	return 0;
+}
