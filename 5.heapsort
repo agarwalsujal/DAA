@@ -1,0 +1,77 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+#include<limits.h>
+#define MAX 50
+void printarray(int a[],int n)
+{
+	int i;
+	for(i=0;i<n;i++)
+	{
+		printf("%d \t",a[i]);
+	}
+}
+void heapfy(int a[],int n,int i)
+{
+	int temp,largest,l,r;
+	largest=i;
+	l=2*i+1;
+	r=2*i+2;
+	if(l<n && a[l]>a[largest])
+	{
+		largest=l;
+	}
+	if(r<n && a[r]>a[largest])
+	{
+		largest=r;
+	}
+	if(largest!=i)
+	{
+		temp=a[i];
+		a[i]=a[largest];
+		a[largest]=temp;
+		heapfy(a,n,largest);
+	}
+}
+void heapsort(int a[],int n)
+{
+	int temp,i;
+	for(i=((n/2)-1);i>=0;i--)
+	{
+		heapfy(a,n,i);
+	}
+	for(i=n-1;i>=0;i--)
+	{
+		temp=a[0];
+		a[0]=a[i];
+		a[i]=temp;
+		heapfy(a,i,0);
+	}
+}
+int main()
+{
+    clock_t start,end;
+    double t;
+    start=clock();
+	int i,temp,a[MAX],n,r;
+	printf("Enter no of elements: ");
+	scanf("%d",&n);
+	srand(time(0));
+	for(i=0;i<n;i++)
+	{
+		r=(rand()%n)+1;
+		a[i]=r;
+	}
+	printf("Enter the array elements:");
+	for(i=0;i<n;i++)
+	{
+		a[i]=rand();
+	}
+	printf("Before sorting: ");
+	printarray(a,n);
+	heapsort(a,n);
+	printf("\nAfter sorting: ");
+	printarray(a,n);
+	prinf("time=%lf",(double) (end-start)/CLOCKS_PER_SEC);
+	return 0;
+}
