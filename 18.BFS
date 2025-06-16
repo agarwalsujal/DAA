@@ -50,7 +50,7 @@ struct Graph* createGraph(int vertices) {
     struct Graph* graph = (struct Graph*)malloc(sizeof(struct Graph));
     graph->numVertices = vertices;
 
-    graph->adjLists = (struct Node*)malloc(vertices * sizeof(struct Node));
+    graph->adjLists = (struct Node**)malloc(vertices * sizeof(struct Node*));
     graph->visited = (int*)malloc(vertices * sizeof(int));
 
     for (int i = 0; i < vertices; i++) {
