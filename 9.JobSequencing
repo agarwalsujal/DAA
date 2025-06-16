@@ -1,0 +1,113 @@
+#include<stdio.h>
+#include<time.h>
+void print(int j[],int d[],int p[],int n)
+{
+	int i;
+	printf("\nJob ID:\t");
+	for(i=0;i<n;i++)
+	{
+		printf("%d \t",j[i]);
+	}
+	printf("\nDeadline:");
+	for(i=0;i<n;i++)
+	{
+		printf("%d \t",d[i]);
+	}
+	printf("\nProfit:\t");
+	for(i=0;i<n;i++)
+	{
+		printf("%d \t",p[i]);
+	}
+}
+void sort(int j[],int d[],int p[],int n)
+{
+	int i,j1,temp;
+	for(i=0;i<n-1;i++)
+	{
+		for(j1=0;j1<n-i-1;j1++)
+		{
+			if(p[j1]<p[j1+1])
+			{
+				temp=p[j1];
+				p[j1]=p[j1+1];
+				p[j1+1]=temp;
+				
+				temp=d[j1];
+				d[j1]=d[j1+1];
+				d[j1+1]=temp;
+				
+				temp=j[j1];
+				j[j1]=j[j1+1];
+				j[j1+1]=temp;
+			}
+		}
+	}
+}
+void jobsequencing(int j[],int d[],int p[],int n)
+{
+	int i,max_dead=0,tp=0,k;
+	for(i=0;i<n;i++)
+	{
+		if(d[i]>max_dead)
+		{
+			max_dead=d[i];
+		}
+	}
+	int slots[max_dead];
+	for(i=0;i<n;i++)
+	{
+		slots[i]=-1;
+	}
+	for(i=0;i<n;i++)
+	{
+		for(k=d[i]-1;k>=0;k--)
+		{
+			if(slots[k]==-1)
+			{
+				slots[k]=j[i];
+				tp=tp+p[i];
+				break;
+			}
+		}
+	}
+	printf("\n\nScheduled Jobs:");
+	for(i=0;i<max_dead;i++)
+	{
+		if(slots[i]!=-1)
+		{
+			printf("%d\t",slots[i]);
+		}
+	}
+	printf("\nTotal profits:%d",tp);
+}
+int main()
+{
+	clock_t s,e;
+	s=clock();
+	int i,n;
+	printf("Enter total no of job: ");
+	scanf("%d",&n);
+	int j[n],d[n],p[n],slot[n];
+	printf("\nJob ID:");
+	for(i=0;i<n;i++)
+	{
+		scanf("%d",&j[i]);
+	}
+	printf("\nDeadlines:");
+	for(i=0;i<n;i++)
+	{
+		scanf("%d",&d[i]);
+	}
+	printf("\nProfits:");
+	for(i=0;i<n;i++)
+	{
+		scanf("%d",&p[i]);
+	}
+	sort(j,d,p,n);
+	printf("\nAfter sort the jobs according to their profits....");
+	print(j,d,p,n);
+	jobsequencing(j,d,p,n);
+	e=clock();
+	printf("\n\nCPU Time:%f",(double)(e-s)/CLOCKS_PER_SEC);
+	return 0;
+}
