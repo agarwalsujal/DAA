@@ -1,0 +1,90 @@
+#include<stdio.h>
+#include<time.h>
+void print(int a[],int st[],int f[],int n)
+{
+	int i;
+	printf("\nActivity no:\t");
+	for(i=0;i<n;i++)
+	{
+		printf("%d \t",a[i]);
+	}
+	printf("\nStart Time:\t");
+	for(i=0;i<n;i++)
+	{
+		printf("%d \t",st[i]);
+	}
+	printf("\nFinish Time:\t");
+	for(i=0;i<n;i++)
+	{
+		printf("%d \t",f[i]);
+	}
+}
+void sort(int a[],int st[],int f[],int n)
+{
+	int i,j,temp;
+	for(i=0;i<n-1;i++)
+	{
+		for(j=0;j<n-i-1;j++)
+		{
+			if(f[j]>f[j+1])
+			{
+				temp=f[j];
+				f[j]=f[j+1];
+				f[j+1]=temp;
+				
+				temp=st[j];
+				st[j]=st[j+1];
+				st[j+1]=temp;
+				
+				temp=a[j];
+				a[j]=a[j+1];
+				a[j+1]=temp;
+			}
+		}
+	}
+}
+void activity_selection(int a[],int st[],int f[],int n)
+{
+	int i=0,j;
+	printf("\n\nSelected Activities and their start,finish time...");
+	printf("\n\nActivity no:%d Start Time:%d Finish Time:%d",a[0],st[0],f[0]);
+	
+	for(j=1;j<n;j++)
+	{
+		if(st[j]>=f[i])
+		{
+			printf("\nActivity no:%d Start Time:%d Finish Time:%d",a[j],st[j],f[j]);
+		}
+		else
+		{
+			continue;    
+		}
+		i++;
+	}
+}
+int main()
+{
+	clock_t s,e;
+	s=clock();
+	int n,i;
+	printf("Enter total no of activities: ");
+	scanf("%d",&n);
+	int st[n],f[n],a[n];
+	printf("\nEnter the activity: ");
+	for(i=0;i<n;i++)
+	{
+		scanf("%d",&a[i]);
+	}
+	printf("\nEnter start and finish time: ");
+	for(i=0;i<n;i++)
+	{
+		scanf("%d %d",&st[i],&f[i]);
+	}
+	sort(a,st,f,n);
+	printf("\nAfter sort the activities according to their finishing time....");
+	print(a,st,f,n);
+	activity_selection(a,st,f,n);
+	e=clock();
+	printf("\n\nCPU Time:%f",(double)(e-s)/CLOCKS_PER_SEC);
+	return 0;
+}
